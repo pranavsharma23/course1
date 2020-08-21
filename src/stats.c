@@ -57,14 +57,14 @@ void print_statistics(unsigned char minimum, unsigned char maximum,
 }
 
 void print_array(unsigned char *data_set, unsigned int length) {
-	printf("\nThe rearranged array:\n");
+    PRINTF("\nThe rearranged array:\n");
 
-	printf("[");
+	PRINTF("[");
 	for (int i = 0; i < length; i++) {
-		printf("%d", data_set[i]);
-		if (i < length - 1) printf(", ");
+		PRINTF("%d", data_set[i]);
+		if (i < length - 1) PRINTF(", ");
 	}
-	printf("]\n");
+	PRINTF("]\n");
 }
 
 unsigned char find_median(unsigned char *data_set, unsigned int length) {
