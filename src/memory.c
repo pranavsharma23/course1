@@ -26,38 +26,38 @@
  Function Definitions
 ***********************************************************/
 void set_value(char * ptr, unsigned int index, char value){
-	ptr[index] = value;
+  ptr[index] = value;
 }
 
 void clear_value(char * ptr, unsigned int index){
-	set_value(ptr, index, 0);
+  set_value(ptr, index, 0);
 }
 
 char get_value(char * ptr, unsigned int index){
-	return ptr[index];
+  return ptr[index];
 }
 
 void set_all(char * ptr, char value, unsigned int size){
-	unsigned int i;
-	for(i = 0; i < size; i++) {
-		set_value(ptr, i, value);
-	}
+  unsigned int i;
+  for(i = 0; i < size; i++) {
+    set_value(ptr, i, value);
+  }
 }
 
 void clear_all(char * ptr, unsigned int size){
-	set_all(ptr, 0, size);
+  set_all(ptr, 0, size);
 }
 
 uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length) {
     uint8_t * temp;
 
     for (size_t i = 0; i < length; i++) {
-		*(temp + i) = *(src + i);
-		*(src + i) = 0;
+    *(temp + i) = *(src + i);
+    *(src + i) = 0;
     }
 
     for (size_t j = 0; j < length; j++) {
-		*(dst + j) = *(temp + j);
+    *(dst + j) = *(temp + j);
     }
 
     return dst;
@@ -67,11 +67,11 @@ uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length) {
     uint8_t * temp;
 
     for (size_t i = 0; i < length; i++) {
-		*(temp + i) = *(src + i);
+    *(temp + i) = *(src + i);
     }
 
     for (size_t j = 0; j < length; j++) {
-		*(dst + j) = *(temp + j);
+    *(dst + j) = *(temp + j);
     }
 
     return dst;
@@ -79,16 +79,16 @@ uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length) {
 
 uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value) {
     for (size_t i = 0; i < length; i++) {
-		*(src + i) = value;
+    *(src + i) = value;
     }
 
     return src;
 }
 
 uint8_t * my_memzero(uint8_t * src, size_t length) {
-	for (size_t i = 0; i < length; i++) {
-		*(src + i) = 0;
-	}
+  for (size_t i = 0; i < length; i++) {
+    *(src + i) = 0;
+  }
 
     return src;
 }
@@ -96,27 +96,27 @@ uint8_t * my_memzero(uint8_t * src, size_t length) {
 uint8_t * my_reverse(uint8_t * src, size_t length) {
     uint8_t * temp;
     for (size_t i = 0; i < length; i++) {
-		*(temp + length -1 - i) = *(src + i);
+    *(temp + length -1 - i) = *(src + i);
     }
 
     for (size_t j = 0; j < length; j++) {
-		*(src + j) = *(temp + j);
+    *(src + j) = *(temp + j);
     }
 
     return src;
 }
 
 int32_t * reserve_words(size_t length) {
-	int32_t * reserved_mem_ptr;
-	reserved_mem_ptr = (char *)malloc(length);
+  int32_t * reserved_mem_ptr;
+  reserved_mem_ptr = (char *)malloc(length);
 
-	if (reserved_mem_ptr == NULL) {
-		return NULL;
-	}
+  if (reserved_mem_ptr == NULL) {
+    return NULL;
+  }
 
-	return reserved_mem_ptr;
+  return reserved_mem_ptr;
 }
 
 void free_words(int32_t * src) {
-	free((void *)src);
+  free((void *)src);
 }
