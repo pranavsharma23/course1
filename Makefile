@@ -23,16 +23,16 @@
 #------------------------------------------------------------------------------
 include sources.mk
 
-
-TARGET = c1m2
+PLATFORM =
+TARGET = course1
 
 # Architectures Specific Flags
-LINKER_FILE = ../msp432p401r.lds
+LINKER_FILE = msp432p401r.lds
 CPU = cortex-m4
 ARCH = thumb
 SPECS = nosys.specs
 
-DFLAGS = -D$(PLATFORM)
+DFLAGS = -D$(PLATFORM) -DCOURSE1 -DVERBOSE
 CPPFLAGS = -E
 
 ifeq ($(PLATFORM),MSP432)
@@ -49,7 +49,7 @@ ifeq ($(PLATFORM),HOST)
 	CC = gcc
 	CFLAGS = -Wall -Werror -g -O0 -std=c99 $(DFLAGS)
 	LD = ld
-	LDFLAGS = -Wl,Map=$(TARGET).map -T
+	LDFLAGS = -Wl,-Map=$(TARGET).map
 	OBJDUMP = objdump
 endif
 
@@ -72,10 +72,11 @@ OBJS = $(SOURCES:.c=.o)
 compile-all: $(SOURCES)
 	$(CC) $(INCLUDES) -c $(CFLAGS) $^
 
+# changed prerequisite from OBJS to SOURCES
 .PHONY: build
 build: $(TARGET).out
-$(TARGET).out: $(OBJS)
-	$(CC) $(INCLUDES) $(OBJS) $(CFLAGS) $(LDFLAGS) -o $@
+$(TARGET).out: $(SOURCES)
+	$(CC) $(INCLUDES) $(SOURCES) $(CFLAGS) $(LDFLAGS) -o $@
 
 .PHONY: clean
 clean:

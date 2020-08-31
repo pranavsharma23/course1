@@ -49,40 +49,34 @@ void clear_all(char * ptr, unsigned int size){
 }
 
 uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length) {
-    uint8_t * temp;
+  uint8_t temp[length];
 
-    for (size_t i = 0; i < length; i++) {
+  for (size_t i = 0; i < length; i++) {
     *(temp + i) = *(src + i);
-    *(src + i) = 0;
-    }
+    // *(src + i) = 0;
+  }
 
-    for (size_t j = 0; j < length; j++) {
+  for (size_t j = 0; j < length; j++) {
     *(dst + j) = *(temp + j);
-    }
+  }
 
-    return dst;
+  return dst;
 }
 
 uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length) {
-    uint8_t * temp;
+  for (size_t j = 0; j < length; j++) {
+    *(dst + j) = *(src + j);
+  }
 
-    for (size_t i = 0; i < length; i++) {
-    *(temp + i) = *(src + i);
-    }
-
-    for (size_t j = 0; j < length; j++) {
-    *(dst + j) = *(temp + j);
-    }
-
-    return dst;
+  return dst;
 }
 
 uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value) {
-    for (size_t i = 0; i < length; i++) {
+  for (size_t i = 0; i < length; i++) {
     *(src + i) = value;
-    }
+  }
 
-    return src;
+  return src;
 }
 
 uint8_t * my_memzero(uint8_t * src, size_t length) {
@@ -94,21 +88,22 @@ uint8_t * my_memzero(uint8_t * src, size_t length) {
 }
 
 uint8_t * my_reverse(uint8_t * src, size_t length) {
-    uint8_t * temp;
-    for (size_t i = 0; i < length; i++) {
-    *(temp + length -1 - i) = *(src + i);
-    }
 
-    for (size_t j = 0; j < length; j++) {
-    *(src + j) = *(temp + j);
-    }
+  size_t low, high;
+  uint8_t temp;
 
-    return src;
+  for (low = 0, high = length - 1; high > low; low++, high--) {
+    temp = *(src + low);
+    *(src + low) = *(src + high);
+    *(src + high) = temp;
+  }
+  
+  return src;
 }
 
 int32_t * reserve_words(size_t length) {
   int32_t * reserved_mem_ptr;
-  reserved_mem_ptr = (char *)malloc(length);
+  reserved_mem_ptr = malloc(SIZE_OF_WORD*length);
 
   if (reserved_mem_ptr == NULL) {
     return NULL;
@@ -117,6 +112,6 @@ int32_t * reserve_words(size_t length) {
   return reserved_mem_ptr;
 }
 
-void free_words(int32_t * src) {
+void free_words(uint32_t * src) {
   free((void *)src);
 }
