@@ -7,15 +7,15 @@
 
 uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
 {
-  uint8_t i = 0;
+  uint8_t count = 0; // track number of digits in data
   int8_t negative = 1; // -1 if data is negative
 
   /* Handle 0 explicitly, otherwise empty string is printed for 0 */
   if (data == 0)
   {
-    *(ptr + i) = '0';
-    i++;
-    *(ptr + i) = '\0';
+    *ptr = '0';
+    count++;
+    *(ptr + count) = '\0';
     return 1;
   }
 
@@ -25,7 +25,8 @@ uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
     data = -data;
   }
 
-  *(ptr + i++) = '\0';
+  *ptr = '\0';
+  count++;
 
   while (data != 0)
   {
@@ -33,32 +34,32 @@ uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
 
     if (rem > 9)
     {
-      *(ptr + i) = rem - 10 + 'a';
+      *(ptr + count) = rem - 10 + 'a';
     } else {
-      *(ptr + i) = rem + '0';
+      *(ptr + count) = rem + '0';
     }
 
     data = data/base; 
-    i++;
+    count++;
   } 
 
   // If number is negative, append '-' 
   if (negative == -1)
-      *(ptr + i) = '-';
+      *(ptr + count) = '-';
 
-  my_reverse(ptr, i);
+  my_reverse(ptr, count);
   //i++;
 
   // Return reversed string
 
   // FOR DEBUGGING
-  for (int j = 0; j < i; j++) {
+  for (int j = 0; j < count; j++) {
     PRINTF("  char: %c\n", *(ptr + j));
   }
   PRINTF("%d\n", 'a');
   // END DEBUGGIGN
 
-  return i;
+  return count;
 }
 
 int32_t my_atoi(uint8_t * ptr, uint8_t digits, uint32_t base)
