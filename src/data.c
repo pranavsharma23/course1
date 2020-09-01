@@ -2,18 +2,21 @@
 #include "data.h"
 #include "memory.h"
 
+#include "platform.h" // FOR DEBUGGING
+
 
 uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
 {
   uint8_t i = 0;
   int8_t negative = 1; // -1 if data is negative
 
-  /* Handle 0 explicitely, otherwise empty string is printed for 0 */
+  /* Handle 0 explicitly, otherwise empty string is printed for 0 */
   if (data == 0)
   {
-    *(ptr + i++) = '0';
+    *(ptr + i) = '0';
+    i++;
     *(ptr + i) = '\0';
-    return *ptr;
+    return 1;
   }
 
   if (data < 0)
@@ -26,7 +29,7 @@ uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
 
   while (data != 0)
   {
-    int rem = data % base;
+    int32_t rem = data % base;
 
     if (rem > 9)
     {
@@ -44,9 +47,17 @@ uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
       *(ptr + i) = '-';
 
   my_reverse(ptr, i);
-  i++;
+  //i++;
 
   // Return reversed string
+
+  // FOR DEBUGGING
+  for (int j = 0; j < i; j++) {
+    PRINTF("  char: %c\n", *(ptr + j));
+  }
+  PRINTF("%d\n", 'a');
+  // END DEBUGGIGN
+
   return i;
 }
 
