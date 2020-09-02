@@ -15,6 +15,7 @@ uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
   {
     *ptr = '0';
     count++;
+
     *(ptr + count) = '\0';
     return 1;
   }
@@ -39,25 +40,18 @@ uint8_t my_itoa(int32_t data, uint8_t * ptr, uint32_t base)
       *(ptr + count) = rem + '0';
     }
 
-    data = data/base; 
+    data = data/base;
     count++;
+
   } 
 
   // If number is negative, append '-' 
-  if (negative == -1)
-      *(ptr + count) = '-';
+  if (negative == -1) {
+    *(ptr + count) = '-';
+    count++;
+  }
 
   my_reverse(ptr, count);
-  //i++;
-
-  // Return reversed string
-
-  // FOR DEBUGGING
-  for (int j = 0; j < count; j++) {
-    PRINTF("  char: %c\n", *(ptr + j));
-  }
-  PRINTF("%d\n", 'a');
-  // END DEBUGGIGN
 
   return count;
 }
@@ -72,12 +66,14 @@ int32_t my_atoi(uint8_t * ptr, uint8_t digits, uint32_t base)
   {
     negative = -1;
     i++;
-    digits--;
   }
 
-  for ( ; i < digits; i++)
+  for (; i < digits - 1; i++)
   {
-    data = data * base + *(ptr + i) - '0';
+    if (*(ptr + i) <= '9')
+      data = data * base + *(ptr + i) - '0';
+    else
+      data = data * base + 10 + *(ptr + i) - 'a';
   }
 
   return negative*data;
